@@ -8,6 +8,9 @@ _V_.Control = _V_.Component.extend({
 
 });
 
+var videoJSTimer;
+var firstTime = true;
+
 /* Control Bar
 ================================================================================ */
 _V_.ControlBar = _V_.Component.extend({
@@ -31,9 +34,21 @@ _V_.ControlBar = _V_.Component.extend({
     this._super(player, options);
 
     player.one("play", this.proxy(function(){
-      this.fadeIn();
-      this.player.addEvent("mouseover", this.proxy(this.fadeIn));
+      if (firstTime) {
+        this.fadeIn();
+        firstTime = false;
+        videoJSTimer = setTimeout(this.proxy(this.fadeOut), 2000);
+      }
+      //this.player.addEvent("mouseover", this.proxy(this.fadeIn));
       this.player.addEvent("mouseout", this.proxy(this.fadeOut));
+      this.player.addEvent("mousemove",function() {
+        if (videoJSTimer) {
+            clearTimeout(videoJSTimer);
+            videoJSTimer = 0;
+        }
+        this.controlBar.fadeIn();
+        videoJSTimer = setTimeout(this.controlBar.proxy(this.controlBar.fadeOut), 3000);
+      });
     }));
 
   },
@@ -47,11 +62,13 @@ _V_.ControlBar = _V_.Component.extend({
   fadeIn: function(){
     this._super();
     this.player.triggerEvent("controlsvisible");
+    $('.player_nav_container').stop().show().fadeIn(300);
   },
 
   fadeOut: function(){
     this._super();
     this.player.triggerEvent("controlshidden");
+    $('.player_nav_container').fadeOut(2000);
   },
 
   lockShowing: function(){

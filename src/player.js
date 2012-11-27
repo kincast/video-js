@@ -139,6 +139,9 @@ _V_.Player = _V_.Component.extend({
     options.loop = tag[getAttribute]("loop") !== null;
     options.muted = tag[getAttribute]("muted") !== null;
 
+    options.width = tag[getAttribute]("width") || tag.style.width || tag.clientWidth;
+    options.height = tag[getAttribute]("height") || tag.style.height || tag.clientHeight;
+
     if (this.tag.hasChildNodes()) {
       for (var c,i=0,j=this.tag.childNodes;i<j.length;i++) {
         c = j[i];
@@ -419,9 +422,9 @@ _V_.Player = _V_.Component.extend({
 
   // Method for calling methods on the current playback technology
   // techCall: function(method, arg){
-  // 
+  //
   //   // if (this.isReady) {
-  //   //   
+  //   //
   //   // } else {
   //   //   _V_.log("The playback technology API is not ready yet. Use player.ready(myFunction)."+" ["+method+"]", arguments.callee.caller.arguments.callee.caller.arguments.callee.caller)
   //   //   return false;
@@ -440,7 +443,7 @@ _V_.Player = _V_.Component.extend({
     this.techCall("pause");
     return this;
   },
-  
+
   // http://dev.w3.org/html5/spec/video.html#dom-media-paused
   // The initial state of paused should be true (in Safari it's actually false)
   paused: function(){
