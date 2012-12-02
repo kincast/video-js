@@ -52,7 +52,7 @@ VideoJS.options = {
   // techOrder: ["flash","html5"],
 
   html5: {},
-  flash: { swf: "/m/videojs/video-js.swf" },
+  flash: { swf: "https://dj4p7gcy1qewc.cloudfront.net/videojs/video-js.swf" },
 
   // Default of web browser is 300x150. Should rely on source width/height.
   width: 300,
@@ -110,7 +110,3 @@ VideoJS.options = {
   // ]
 };
 
-// Set CDN Version of swf
-if (CDN_VERSION != "GENERATED_CDN_VSN") {
-  _V_.options.flash.swf = "http://vjs.zencdn.net/"+CDN_VERSION+"/video-js.swf"
-}
